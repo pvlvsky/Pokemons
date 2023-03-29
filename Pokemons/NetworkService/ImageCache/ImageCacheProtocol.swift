@@ -8,6 +8,6 @@
 import UIKit
 
 protocol ImageCacheProtocol {
-    static func getImage(with url: URL, completion: @escaping (UIImage?) -> ())
-    static func loadImage(with url: URL, completion: @escaping (UIImage?) -> ())
+    func getImage(with url: URL, completion: @escaping (UIImage?) -> ())
+    func loadImage(with url: URL, completion: @escaping (UIImage?) -> ())
 }

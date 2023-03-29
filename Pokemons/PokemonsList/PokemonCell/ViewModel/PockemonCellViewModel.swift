@@ -7,11 +7,11 @@
 
 import Foundation
 
-final class PokemonCellViewModel {
+final class PokemonCellViewModel: PokemonCellViewModelProtocol {
+
+    private var pokemonModel: Pokemon
     
-    private var pokemonModel: PokemonCellModel
-    
-    init(pokemonModel: PokemonCellModel) {
+    init(pokemonModel: Pokemon) {
         self.pokemonModel = pokemonModel
     }
     
@@ -19,7 +19,7 @@ final class PokemonCellViewModel {
         return pokemonModel.name
     }
 
-    var id: String {
+    var url: String {
         return pokemonModel.id
     }
 }

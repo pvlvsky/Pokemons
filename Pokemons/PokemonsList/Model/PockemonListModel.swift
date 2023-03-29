@@ -8,5 +8,9 @@
 import Foundation
 
 struct PokemonListModel: Codable {
-    var results: [PokemonCellModel]
+    var results: [Pokemon]?
+    
+    init(results: [Pokemon]? = []) {
+        self.results = results
+    }
 }

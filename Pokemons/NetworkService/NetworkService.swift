@@ -7,7 +7,7 @@
 
 import Foundation
 
-class NetworkService: NetworkServiceProtocol {
+final class NetworkService: NetworkServiceProtocol {
 
     func loadPokemonsList(completion: @escaping (PokemonListModel) -> ()) {
         var urlComponents = URLComponents()
@@ -21,13 +21,17 @@ class NetworkService: NetworkServiceProtocol {
         request.httpMethod = "GET"
         
         URLSession.shared.dataTask(with: request) { data, response, error in
+            
             if let error = error {
                 print(error.localizedDescription)
             } else if let jsonData = data {
+                print(jsonData)
                 let pokemonsList = try? JSONDecoder().decode(PokemonListModel.self, from: jsonData)
+               
                 DispatchQueue.main.async {
                     guard let pokemonsList = pokemonsList else { return }
                     completion(pokemonsList)
+                    print(pokemonsList)
                 }
             }
         }.resume()
