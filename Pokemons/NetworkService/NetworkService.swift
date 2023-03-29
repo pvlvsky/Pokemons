@@ -8,7 +8,7 @@
 import Foundation
 
 class NetworkService: NetworkServiceProtocol {
-    
+
     func loadPokemonsList(completion: @escaping (PokemonListModel) -> ()) {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"

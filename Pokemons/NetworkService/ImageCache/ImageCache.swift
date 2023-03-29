@@ -12,7 +12,9 @@ final class ImageCache: ImageCacheProtocol {
     private static let cache = NSCache<NSString, UIImage>()
     
     private static var responses = [URL: [(UIImage?) -> ()]]()
-        
+    
+    //MARK: Проверка на наличие картинки в кэше, если ее нет то загружаем картинку и добавляем ее в кэш
+    
     static func getImage(with url: URL, completion: @escaping (UIImage?) -> ()) {
         if let image = cache.object(forKey: url.absoluteString as NSString) {
             completion(image)
