@@ -8,25 +8,33 @@
 import UIKit
 
 final class PokemonInfoView: UIView {
-
+    
     private var viewModel: PokemonInfoViewModelProtocol
-
+    
     init(viewModel: PokemonInfoViewModelProtocol) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         self.viewModel.view = self
-        //buildView()
+        setupHierarchy()
+        setupConstraints()
+        additionalSetup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
+    }()
+    
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
     }()
     
     private lazy var nameLabel: UILabel = {
@@ -47,6 +55,21 @@ final class PokemonInfoView: UIView {
         return label
     }()
     
+    private lazy var containerStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var nameStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .fillProportionally
+        return stackView
+    }()
+    
     private lazy var heightDescription: PokemonInfoDescriptionView = {
         return PokemonInfoDescriptionView(title: "Height")
     }()
@@ -58,7 +81,7 @@ final class PokemonInfoView: UIView {
     private lazy var typesDescription: PokemonInfoDescriptionView = {
         return PokemonInfoDescriptionView(title: "Types")
     }()
-
+    
     private func setImage(id: String) {
         guard let url = URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(id).png") else { return }
         ImageCache.getImage(with: url) { [weak self] (image) in
@@ -70,10 +93,14 @@ final class PokemonInfoView: UIView {
     
     private func configure() {
         let pokemonInfo = viewModel.pokemonViewModel
-        let types = pokemonInfo.types.map({$0.type.name.capitalized}).joined(separator: ", ")
+        let types = pokemonInfo.types.map({
+            $0.type
+                .name
+            .capitalized })
+            .joined(separator: ", ")
         let weight = String(format: "%.1fkg", Double(pokemonInfo.weight) / 10.0)
         let height = String(format: "%.1fm", Double(pokemonInfo.height) / 10.0)
-
+        
         nameLabel.text = pokemonInfo.name.capitalized
         idLabel.text = "ID:\(pokemonInfo.id)"
         heightDescription.setText(height)
@@ -86,53 +113,48 @@ final class PokemonInfoView: UIView {
 extension PokemonInfoView: PokemonInfoViewProtocol {}
 
 extension PokemonInfoView {
-
+    
     func setupHierarchy() {
-        addSubview(imageView)
-        addSubview(idLabel)
-        addSubview(nameLabel)
-        addSubview(heightDescription)
-        addSubview(weightDescription)
-        addSubview(typesDescription)
+        
+        nameStackView.addArrangedSubview(idLabel)
+        nameStackView.addArrangedSubview(nameLabel)
+        
+        containerStackView.addArrangedSubview(imageView)
+        containerStackView.addArrangedSubview(nameStackView)
+        containerStackView.addSpacing(18)
+        containerStackView.addArrangedSubview(heightDescription)
+        containerStackView.addSpacing(9)
+        containerStackView.addArrangedSubview(weightDescription)
+        containerStackView.addSpacing(18)
+        containerStackView.addArrangedSubview(typesDescription)
+        containerStackView.addSpacing(18)
+        
+        scrollView.addSubview(containerStackView)
+        addSubview(scrollView)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            imageView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            imageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: 200.0)
+            scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            scrollView.widthAnchor.constraint(equalTo: widthAnchor)
         ])
 
         NSLayoutConstraint.activate([
-            idLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
-            idLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            idLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+            containerStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30),
+            containerStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10),
+            containerStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            containerStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30)
         ])
         
         NSLayoutConstraint.activate([
-            nameLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
-            nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16.0),
-        ])
-        
-        NSLayoutConstraint.activate([
-            heightDescription.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16.0),
-            heightDescription.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-        ])
-        
-        NSLayoutConstraint.activate([
-            weightDescription.topAnchor.constraint(equalTo: heightDescription.bottomAnchor, constant: 16.0),
-            weightDescription.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-        ])
-        
-        NSLayoutConstraint.activate([
-            typesDescription.topAnchor.constraint(equalTo: weightDescription.bottomAnchor, constant: 16.0),
-            typesDescription.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
+            imageView.widthAnchor.constraint(equalTo: containerStackView.widthAnchor),
+            imageView.heightAnchor.constraint(equalToConstant: 250),
         ])
     }
     
     func additionalSetup() {
-        backgroundColor = .white
+        backgroundColor = .systemGray4
         configure()
     }
 }

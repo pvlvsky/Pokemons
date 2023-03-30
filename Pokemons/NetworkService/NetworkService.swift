@@ -8,6 +8,10 @@
 import Foundation
 
 final class NetworkService: NetworkServiceProtocol {
+    
+    enum fetchErrors: Error {
+        case 
+    }
 
     func loadPokemonsList(completion: @escaping (PokemonListModel) -> ()) {
         var urlComponents = URLComponents()

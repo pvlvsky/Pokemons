@@ -20,8 +20,8 @@ final class PokemonInfoCoordinator: CoordinatorProtocol {
     func start() {
         let viewModel = PokemonInfoViewModel(viewModel: pokemonInfoModel, coordinator: self)
         let pokemonInfoVC = PokemonInfoVC(viewModel: viewModel)
-        navigationController.modalPresentationStyle = .automatic
-        navigationController.present(pokemonInfoVC, animated: true, completion: nil)
+        
+        navigationController.pushViewController(pokemonInfoVC, animated: true)
     }
 }
 

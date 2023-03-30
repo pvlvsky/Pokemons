@@ -86,6 +86,6 @@ extension PokemonInfoDescriptionView {
     }
     
     func additionalSetup() {
-        backgroundColor = .clear
+        backgroundColor = .systemGray4
     }
 }

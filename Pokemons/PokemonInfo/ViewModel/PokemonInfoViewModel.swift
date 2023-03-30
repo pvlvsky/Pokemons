@@ -21,6 +21,5 @@ final class PokemonInfoViewModel {
 }
 
 extension PokemonInfoViewModel: PokemonInfoViewModelProtocol {
-    
     var pokemonViewModel: PokemonInfoModel { return viewModel }
 }
