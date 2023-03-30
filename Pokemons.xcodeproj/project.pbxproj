@@ -92,6 +92,7 @@
 		380EDCFF29D5052A008238C8 /* Applications */ = {
 			isa = PBXGroup;
 			children = (
+				380EDD1229D53FF8008238C8 /* Coordinator */,
 				3899C21529D427F100E36DB0 /* AppDelegate.swift */,
 			);
 			path = Applications;
@@ -171,6 +172,26 @@
 			path = "UIStackView+Spacing";
 			sourceTree = "<group>";
 		};
+		380EDD2429D55659008238C8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3899C21E29D427F200E36DB0 /* Assets.xcassets */,
+				3899C22029D427F200E36DB0 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		380EDD2529D55691008238C8 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				3899C22929D42B1A00E36DB0 /* PokemonsList */,
+				380EDD0029D517C9008238C8 /* PokemonInfo */,
+				3899C22D29D42B6900E36DB0 /* NetworkService */,
+				380EDD2129D55132008238C8 /* UIStackView+Spacing */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 		3899C20929D427F100E36DB0 = {
 			isa = PBXGroup;
 			children = (
@@ -190,14 +211,9 @@
 		3899C21429D427F100E36DB0 /* Pokemons */ = {
 			isa = PBXGroup;
 			children = (
-				380EDD2129D55132008238C8 /* UIStackView+Spacing */,
-				380EDD1229D53FF8008238C8 /* Coordinator */,
-				3899C22D29D42B6900E36DB0 /* NetworkService */,
-				380EDD0029D517C9008238C8 /* PokemonInfo */,
-				3899C22929D42B1A00E36DB0 /* PokemonsList */,
 				380EDCFF29D5052A008238C8 /* Applications */,
-				3899C21E29D427F200E36DB0 /* Assets.xcassets */,
-				3899C22029D427F200E36DB0 /* LaunchScreen.storyboard */,
+				380EDD2429D55659008238C8 /* Resources */,
+				380EDD2529D55691008238C8 /* Sources */,
 				3899C22329D427F200E36DB0 /* Info.plist */,
 			);
 			path = Pokemons;

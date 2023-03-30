@@ -10,7 +10,12 @@ import Foundation
 final class NetworkService: NetworkServiceProtocol {
     
     enum fetchErrors: Error {
-        case 
+        case invalidURL
+        case taskError
+        case invalidResponse
+        case invalidStatusCode(Int)
+        case noData
+        case invalidJSON
     }
 
     func loadPokemonsList(completion: @escaping (PokemonListModel) -> ()) {
@@ -19,7 +24,7 @@ final class NetworkService: NetworkServiceProtocol {
         urlComponents.host = "pokeapi.co"
         urlComponents.path = "/api/v2/pokemon"
         urlComponents.queryItems = [URLQueryItem(name: "offset", value: "0"),
-                                    URLQueryItem(name: "limit", value: "50")]
+                                    URLQueryItem(name: "limit", value: "10000")]
         guard let url = urlComponents.url else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
