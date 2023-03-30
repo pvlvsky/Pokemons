@@ -36,4 +36,29 @@ final class NetworkService: NetworkServiceProtocol {
             }
         }.resume()
     }
+    
+    func loadPokemonInfo(id: String, completion: @escaping (PokemonInfoModel) -> ()) {
+        var urlComponents = URLComponents()
+        
+        urlComponents.scheme = "https"
+        urlComponents.host = "pokeapi.co"
+        urlComponents.path = "/api/v2/pokemon/" + id
+        guard let url = urlComponents.url else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error.localizedDescription)
+            } else if let jsonData = data {
+                let pokemonInfo = try? JSONDecoder().decode(PokemonInfoModel.self, from: jsonData)
+                
+                DispatchQueue.main.async {
+                    guard let pokemonInfo = pokemonInfo else { return }
+                    completion(pokemonInfo)
+                    print(pokemonInfo)
+                }
+            }
+        }.resume()
+    }
 }

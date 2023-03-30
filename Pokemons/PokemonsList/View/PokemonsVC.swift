@@ -15,7 +15,7 @@ class PokemonsVC: UIViewController {
     init(viewModel: PokemonListViewModelProtocol) {
         self.viewModel = viewModel
         self.pokemonView = PokemonsView(viewModel: viewModel)
-        super.init(nibName: "PokemonsVC", bundle: nil)
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {

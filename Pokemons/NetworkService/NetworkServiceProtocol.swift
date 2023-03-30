@@ -9,4 +9,5 @@ import Foundation
 
 protocol NetworkServiceProtocol {
     func loadPokemonsList(completion: @escaping (PokemonListModel) -> ())
+    func loadPokemonInfo(id: String, completion: @escaping (PokemonInfoModel) -> ())
 }

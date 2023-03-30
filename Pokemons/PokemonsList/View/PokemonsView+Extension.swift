@@ -34,6 +34,10 @@ extension PokemonsView: UICollectionViewDataSource, UICollectionViewDelegate {
         cell.configure(with: viewModel.cellViewModelFor(indexPath: indexPath))
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.openPockemonInfo(indexPath: indexPath)
+    }
 }
 
 extension PokemonsView {
