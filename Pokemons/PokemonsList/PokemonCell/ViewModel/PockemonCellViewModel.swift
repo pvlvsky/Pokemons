@@ -19,7 +19,7 @@ final class PokemonCellViewModel: PokemonCellViewModelProtocol {
         return pokemonModel.name
     }
 
-    var url: String {
-        return pokemonModel.id
+    var id: String {
+        return pokemonModel.id ?? ""
     }
 }

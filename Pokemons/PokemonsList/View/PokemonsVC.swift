@@ -12,10 +12,10 @@ class PokemonsVC: UIViewController {
     var viewModel: PokemonListViewModelProtocol!
     private var pokemonView: PokemonsView!
     
-    init(viewModel: PokemonListViewModel) {
+    init(viewModel: PokemonListViewModelProtocol) {
         self.viewModel = viewModel
         self.pokemonView = PokemonsView(viewModel: viewModel)
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: "PokemonsVC", bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -24,14 +24,13 @@ class PokemonsVC: UIViewController {
 
     override func loadView() {
         self.view = pokemonView
-        self.pokemonView.frame = view.frame
-        self.pokemonView.center = view.center
+        self.view.backgroundColor = .systemGray4
         title = "Pokemons"
-        navigationController?.navigationBar.backgroundColor = .white
+        navigationController?.navigationBar.backgroundColor = .systemGray4
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        viewModel.loadPokemonList()
+        viewModel.getPokemonList()
     }
 }

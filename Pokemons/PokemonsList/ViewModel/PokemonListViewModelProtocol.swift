@@ -8,10 +8,9 @@
 import Foundation
 
 protocol PokemonListViewModelProtocol {
-
+    
     var view: PokemonsViewProtocol? { get set }
     var count: Int { get }
-    
-    func loadPokemonList()
     func cellViewModelFor(indexPath: IndexPath) -> PokemonCellViewModel
+    func getPokemonList()
 }

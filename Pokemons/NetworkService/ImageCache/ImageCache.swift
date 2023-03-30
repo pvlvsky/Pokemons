@@ -9,13 +9,13 @@ import UIKit
 
 final class ImageCache: ImageCacheProtocol {
         
-    let cache = NSCache<NSString, UIImage>()
+    static let cache = NSCache<NSString, UIImage>()
     
-    var responses = [URL: [(UIImage?) -> ()]]()
+    static var responses = [URL: [(UIImage?) -> ()]]()
     
     //MARK: Проверка на наличие картинки в кэше, если ее нет то загружаем картинку и добавляем ее в кэш
     
-    func getImage(with url: URL, completion: @escaping (UIImage?) -> ()) {
+    static func getImage(with url: URL, completion: @escaping (UIImage?) -> ()) {
         if let image = cache.object(forKey: url.absoluteString as NSString) {
             completion(image)
         } else {
@@ -23,7 +23,7 @@ final class ImageCache: ImageCacheProtocol {
         }
     }
     
-    func loadImage(with url: URL, completion: @escaping (UIImage?) -> ()) {
+    static func loadImage(with url: URL, completion: @escaping (UIImage?) -> ()) {
         URLSession.shared.dataTask(with: url) { data, response, error in
             
             if self.responses[url] != nil {
